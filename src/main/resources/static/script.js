@@ -79,6 +79,10 @@ window.deleteCustomer = async function(id) {
     if (confirm('Are you sure you want to delete this customer?')) {
         await fetch(`http://localhost:8080/customers/remove?id=${id}`, {
             method: 'DELETE'
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
         });
         await this.fetchCustomers();
     }
@@ -86,7 +90,7 @@ window.deleteCustomer = async function(id) {
 
 window.editCustomer = function(id){
 
-//    let response = await fetch(`http://localhost:8080/customers/get/${id}` , {method: "GET", headers: {'Content-Type': 'application/json'}});
+//    let response = await fetch(`http://localhost:8080/customers/get/${id}` , {method: "GET", headers: {'Authorization' : `Bearer ${token}`, 'Content-Type': 'application/json'}});
     const customer = this.customers.find((x)=> x.id == id);
     if(customer){
         document.getElementById('editFirstName').value = customer.first_name;
@@ -126,6 +130,7 @@ async function handleEditFormSubmit(event) {
         {
            method: 'PUT',
            headers: {
+               'Authorization' : `Bearer ${token}`,
                'Content-Type': 'application/json'
            },
            body: JSON.stringify(customer)
