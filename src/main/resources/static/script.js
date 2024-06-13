@@ -9,10 +9,11 @@ const customerIdInput = document.getElementById('customerId');
 const editCustomerModal = document.getElementById('editCustomerModal');
 const editCustomerIdInput = document.getElementById('editCustomerId');
 const editCustomerForm = document.getElementById('editCustomerForm');
+const syncCustomers = document.getElementById('sync_customers');
 
 customerForm.addEventListener('submit', handleFormSubmit);
 editCustomerForm.addEventListener('submit', handleEditFormSubmit);
-
+//syncCustomers.addEventListener('onclick', syncCustomerList);
 async function handleFormSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -77,13 +78,9 @@ customerTableBody.innerHTML = '';
 
 window.deleteCustomer = async function(id) {
     if (confirm('Are you sure you want to delete this customer?')) {
-        await fetch(`http://localhost:8080/customers/remove?id=${id}`, {
-            method: 'DELETE'
-            headers: {
-                'Authorization' : `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-        });
+        await fetch(`http://localhost:8080/customers/remove?id=${id}`,
+        { method : 'DELETE', headers: {'Authorization' : `Bearer ${token}`, 'Content-Type': 'application/json'} }
+        );
         await this.fetchCustomers();
     }
 }
@@ -147,4 +144,55 @@ async function handleEditFormSubmit(event) {
 function closeModel(){
     editCustomerModal.classList.remove('show');
     editCustomerModal.style.display = 'none';
+}
+async function syncCustomerList() {
+         const url = `http://localhost:8080/customers/sync`;
+       try{
+             let res = await fetch(url,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                }
+            );
+            res = await res.json();
+       }catch(e){
+            console.log(e);
+       }
+
+//    try {
+//        // Step 1: Authenticate user and obtain token
+//        const authResponse = await fetch('https://qa.sunbasedata.com/sunbase/portal/api/assignment_auth.jsp', {
+//            method: 'POST',
+//            body: JSON.stringify({
+//                login_id: 'test@sunbasedata.com',
+//                password: 'Test@123'
+//            })
+//        });
+//
+//        const authData = await authResponse.json();
+//        const token = authData.token; // Assuming token is returned in JSON response
+//
+//        console.log(token);
+//        // Step 2: Fetch customer list
+//        const customerResponse = await fetch('https://qa.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=get_customer_list', {
+//            method: 'GET',
+//            headers: {
+//                'Authorization': `Bearer ${token}`
+//            }
+//        });
+//
+//        const customers = await customerResponse.json();
+//
+//        console.log(customers);
+//
+//        // Display success message or update UI accordingly
+//        alert('Customer list synchronized successfully!');
+//    } catch (error) {
+//        console.error('Error syncing customer list:', error);
+//        // Handle error scenario, show error message to user
+//        alert('Failed to sync customer list. Please try again later.');
+//    }
 }
