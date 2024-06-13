@@ -13,4 +13,7 @@ public interface CustomerRepo extends JpaRepository<Customer , Integer> {
 
     @Query(value = "SELECT * FROM customer LIMIT :limit OFFSET :offset", nativeQuery = true)
     List<Customer> findCustomersWithPagination(@Param("limit") int limit, @Param("offset") int offset);
+
+    @Query(value = "SELECT * FROM customer WHERE email : email", nativeQuery = true)
+    List<Customer> findByEmail(@Param("email") String email);
 }

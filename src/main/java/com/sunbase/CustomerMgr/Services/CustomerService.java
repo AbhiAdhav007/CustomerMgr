@@ -83,13 +83,12 @@ public class CustomerService {
 
         for (Map<String, Object> customerData : customers) {
             Customer customer = mapToCustomer(customerData);
-            customerRepo.save(customer); // Assuming save() method handles both insert and update
+            customerRepo.save(customer);
         }
     }
 
     private Customer mapToCustomer(Map<String, Object> customerData) {
         Customer customer = new Customer();
-//        customer.setUuid((String) customerData.get("uuid"));
         customer.setFirst_name((String) customerData.get("first_name"));
         customer.setLast_name((String) customerData.get("last_name"));
         customer.setStreet((String) customerData.get("street"));

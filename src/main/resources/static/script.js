@@ -173,20 +173,22 @@ async function syncCustomerList() {
 //        });
 //
 //        const authData = await authResponse.json();
-//        const token = authData.token; // Assuming token is returned in JSON response
+//        const access_token = authData.access_token; // Assuming token is returned in JSON response
 //
-//        console.log(token);
+//        console.log(access_token);
 //        // Step 2: Fetch customer list
 //        const customerResponse = await fetch('https://qa.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=get_customer_list', {
-//            method: 'GET',
+//            method: 'POST',
 //            headers: {
-//                'Authorization': `Bearer ${token}`
+//                'Authorization': `Bearer ${access_token}`
 //            }
 //        });
 //
 //        const customers = await customerResponse.json();
 //
 //        console.log(customers);
+//
+//
 //
 //        // Display success message or update UI accordingly
 //        alert('Customer list synchronized successfully!');

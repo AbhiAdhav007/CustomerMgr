@@ -30,9 +30,9 @@ public class AuthService {
 
         String authBody = "{\"login_id\" : \"test@sunbasedata.com\", \"password\" :\"Test@123\"}";
         HttpEntity<String> request = new HttpEntity<>(authBody, headers);
+
         ResponseEntity<Map> response = restTemplate.exchange(authUrl, HttpMethod.POST, request, Map.class);
-        logger.info("procedd");
-        return response.getBody().get("token").toString();
+        return response.getBody().get("access_token").toString();
     }
 
 }
