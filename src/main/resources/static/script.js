@@ -158,6 +158,7 @@ async function syncCustomerList() {
                 }
             );
             res = await res.json();
+            console.log(res);
        }catch(e){
             console.log(e);
        }

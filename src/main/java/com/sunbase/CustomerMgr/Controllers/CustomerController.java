@@ -85,9 +85,16 @@ public class CustomerController {
     }
 
     @PostMapping("/sync")
-    public String syncCustomers() {
-        customerService.syncCustomers();
-        return "redirect:/customers";
+    public ResponseEntity<List<Customer>> syncCustomers() {
+
+        try{
+            List<Customer> customers = customerService.syncCustomers();
+            return new ResponseEntity<>(customers, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
